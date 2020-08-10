@@ -5,25 +5,34 @@ package graph
 
 import (
 	"context"
-	"fmt"
+	"strconv"
 
 	"github.com/rezokk/graphql-sample/graph/generated"
 	"github.com/rezokk/graphql-sample/graph/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *queryResolver) People(ctx context.Context) ([]*model.Person, error) {
+	people := []string{
+		"ry",
+		"sh",
+		"sat",
+		"eco",
+		"mi",
+		"ritsu",
+		"jko",
+		"akio",
+	}
+	personModels := []*model.Person{}
+	for i, p := range people {
+		personModels = append(personModels, &model.Person{
+			ID:   strconv.Itoa(i),
+			Name: p,
+		})
+	}
+	return personModels, nil
 }
-
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-
-// Mutation returns generated.MutationResolver implementation.
-func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
-type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
