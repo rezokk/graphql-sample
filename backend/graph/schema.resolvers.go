@@ -5,31 +5,67 @@ package graph
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/rezokk/graphql-sample/graph/generated"
 	"github.com/rezokk/graphql-sample/graph/model"
 )
 
+var (
+	satsu = "satsu"
+	eco   = "eco"
+	ry    = "ry"
+	sh    = "sh"
+	mi    = "mi"
+	ritsu = "ritsu"
+	jco   = "jco"
+	aki   = "aki"
+)
+
 func (r *queryResolver) People(ctx context.Context) ([]*model.Person, error) {
-	people := []string{
-		"ry",
-		"sh",
-		"sat",
-		"eco",
-		"mi",
-		"ritsu",
-		"jko",
-		"akio",
+	people := []*model.Person{
+		{
+			Name:     ry,
+			Parents:  []*string{&eco, &satsu},
+			Children: []*string{&ritsu},
+		},
+		{
+			Name:     mi,
+			Parents:  []*string{&jco},
+			Children: []*string{&ritsu},
+		},
+		{
+			Name:     sh,
+			Parents:  []*string{&eco, &satsu},
+			Children: []*string{},
+		},
+		{
+			Name:     satsu,
+			Parents:  []*string{&aki},
+			Children: []*string{&ry, &sh},
+		},
+		{
+			Name:     eco,
+			Parents:  []*string{},
+			Children: []*string{&ry, &sh},
+		},
+		{
+			Name:     ritsu,
+			Parents:  []*string{&ry, &mi},
+			Children: []*string{},
+		},
+		{
+			Name:     jco,
+			Parents:  []*string{},
+			Children: []*string{&mi},
+		},
+		{
+			Name:     aki,
+			Parents:  []*string{},
+			Children: []*string{&satsu},
+		},
 	}
-	personModels := []*model.Person{}
-	for i, p := range people {
-		personModels = append(personModels, &model.Person{
-			ID:   strconv.Itoa(i),
-			Name: p,
-		})
-	}
-	return personModels, nil
+
+	return people, nil
 }
 
 // Query returns generated.QueryResolver implementation.

@@ -1,6 +1,7 @@
 type Person {
-  id: ID!
   name: String!
+  parents: [String]
+  children: [String]
 }
 
 type Query {

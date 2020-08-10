@@ -3,6 +3,7 @@
 package model
 
 type Person struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	Name     string    `json:"name"`
+	Parents  []*string `json:"parents"`
+	Children []*string `json:"children"`
 }
