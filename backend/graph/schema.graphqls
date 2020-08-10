@@ -5,5 +5,5 @@ type Person {
 }
 
 type Query {
-  people: [Person!]!
+  people(hasChild: Boolean): [Person!]!
 }
